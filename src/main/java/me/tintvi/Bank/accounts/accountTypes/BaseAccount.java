@@ -1,0 +1,67 @@
+package me.tintvi.Bank.accounts.accountTypes;
+
+import me.tintvi.Bank.card.BaseCard;
+import me.tintvi.Bank.person.Person;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class BaseAccount {
+    private float balance;
+    private Person owner;
+    private HashMap<String, BaseCard> cards = new HashMap<>();
+    private String accountNumber;
+
+
+
+    public BaseAccount(String accountNumber, Person owner, float initialBalance) {
+        this.balance = initialBalance;
+        this.owner = owner;
+        this.accountNumber = accountNumber;
+    }
+
+    public float getBalance() {
+        return balance;
+    }
+
+    public void setBalance(float newBalance) {
+        this.balance = newBalance;
+    }
+
+    public void addBalance(float amount) {
+        this.balance += amount;
+    }
+
+    public boolean removeBalance(float amount) {
+        if(amount > balance) return false;
+        balance -= amount;
+        return true;
+    }
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void addCard(BaseCard card) {
+        this.cards.put(card.getCardNumber(), card);
+    }
+
+    public void addMultipleCards(List<BaseCard> cardList) {
+        for(BaseCard card : cardList) {
+            this.addCard(card);
+        }
+    }
+
+    public int getCardCount() {
+        return this.cards.size();
+    }
+
+    public String getAccountNumber() {
+        return this.accountNumber;
+    }
+
+    public ArrayList<BaseCard> getAccountCards() {
+        return new ArrayList<>(this.cards.values());
+    }
+}
