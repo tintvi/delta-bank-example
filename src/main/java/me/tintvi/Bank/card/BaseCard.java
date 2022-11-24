@@ -28,4 +28,6 @@ public class BaseCard {
     public String getCvc() {
         return cvc;
     }
+
+    public BaseAccount getAccount() {return baseAccount;}
 }

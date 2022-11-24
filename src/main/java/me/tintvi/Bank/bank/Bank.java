@@ -1,6 +1,10 @@
 package me.tintvi.Bank.bank;
 
 import me.tintvi.Bank.actions.ActionProcessService;
+import me.tintvi.Bank.atm.AtmCreationService;
+import me.tintvi.Bank.atm.AtmInfoPrinterService;
+import me.tintvi.Bank.atm.AtmWithdrawService;
+import me.tintvi.Bank.atm.BaseAtm;
 import me.tintvi.Bank.bank.serialization.BankJsonSerializationObjectFactory;
 import me.tintvi.Bank.accounts.accountTypes.AccountType;
 import me.tintvi.Bank.accounts.accountTypes.BaseAccount;
@@ -10,6 +14,7 @@ import me.tintvi.Bank.accounts.services.AccountCreationService;
 import me.tintvi.Bank.accounts.services.AccountInfoPrinterService;
 import me.tintvi.Bank.accounts.services.InterestManagerService;
 import me.tintvi.Bank.accounts.services.MoneyTransferService;
+import me.tintvi.Bank.card.BaseCard;
 import me.tintvi.Bank.card.CardCreatorService;
 import me.tintvi.Bank.card.CardInfoPrinterService;
 import me.tintvi.Bank.menu.Menu;
@@ -63,22 +68,31 @@ public class Bank {
     @Inject
     ActionProcessService actionProcessService;
 
-    public void startTerminal() {
-        System.out.println("Hello from bank application!");
+    @Inject
+    AtmCreationService atmCreationService;
 
-        Menu menu = new Menu();
-        menu.printMenu();
+    @Inject
+    AtmInfoPrinterService atmInfoPrinterService;
 
-        while (true) {
-            MenuChoices choice = menu.read();
+    @Inject
+    AtmWithdrawService atmWithdrawService;
 
-            if (choice == MenuChoices.EXIT) {
-                break;
-            }
-
-            actionProcessService.processAction(choice);
-        }
-    }
+//    public void startTerminal() {
+//        System.out.println("Hello from bank application!");
+//
+//        Menu menu = new Menu();
+//        menu.printMenu();
+//
+//        while (true) {
+//            MenuChoices choice = menu.read();
+//
+//            if (choice == MenuChoices.EXIT) {
+//                break;
+//            }
+//
+//            actionProcessService.processAction(choice);
+//        }
+//    }
 
     public void example() {
 
@@ -125,5 +139,23 @@ public class Bank {
         AccountJsonSerializationObject deserializedAccount = gsonSerializationService.deserialize(jsonFile, AccountJsonSerializationObject.class);
         System.out.println(deserializedAccount.accountNumber);
         BaseAccount deserializedBase = accountCreationService.createAccount(deserializedAccount);
+    }
+
+    public void atmExample(){
+
+        Person owner = this.personFactory.createPerson("vitek", "tintera", 1);
+        BaseAccount myAccount = this.accountCreationService.createAccount(AccountType.StudentAccount, owner, 1000);
+        this.accountInfoPrinterService.printAccountBalance(myAccount);
+
+        BaseCard myCard = this.cardCreatorService.createCardAndSetIntoAccount(myAccount);
+        this.cardInfoPrinterService.printAccountCards(myAccount);
+
+        BaseAtm ATM = atmCreationService.createAtm();
+
+        this.atmInfoPrinterService.getAccountBalance(myCard);
+
+        this.atmWithdrawService.WithdrawMoney(myCard, 500);
+
+        this.atmInfoPrinterService.getAccountBalance(myCard);
     }
 }

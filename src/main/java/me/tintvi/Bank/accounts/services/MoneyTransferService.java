@@ -20,4 +20,14 @@ public class MoneyTransferService {
             System.out.println("The sender account does not have enough money to send!");
         }
     }
+
+    public void withdrawMoney(BaseAccount sender, float amount) {
+        if(sender.removeBalance(amount)) {
+            //recipient.addBalance(feeCalculator.deductPaymentFee(sender, amount));
+            System.out.println("You have received " + amount + " of money. Enjoy!");
+        }
+        else {
+            System.out.println("The sender account does not have enough money to send!");
+        }
+    }
 }

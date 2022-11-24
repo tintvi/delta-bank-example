@@ -16,6 +16,8 @@ public class Main {
         Injector injector = Guice.createInjector(new BankInjector());
 
         Bank bank = injector.getInstance(Bank.class);
-        bank.startTerminal();
+        //bank.startTerminal();
+        //bank.example();
+        bank.atmExample();
     }
 }
