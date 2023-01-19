@@ -18,6 +18,8 @@ import me.tintvi.Bank.accounts.services.MoneyTransferService;
 import me.tintvi.Bank.card.BaseCard;
 import me.tintvi.Bank.card.CardCreatorService;
 import me.tintvi.Bank.card.CardInfoPrinterService;
+import me.tintvi.Bank.cheque.BaseCheque;
+import me.tintvi.Bank.cheque.ChequeCreatorService;
 import me.tintvi.Bank.menu.Menu;
 import me.tintvi.Bank.menu.MenuChoices;
 import me.tintvi.Bank.person.Person;
@@ -78,6 +80,9 @@ public class Bank {
 
     @Inject
     AtmWithdrawService atmWithdrawService;
+
+    @Inject
+    ChequeCreatorService chequeCreatorService;
 
 //    public void startTerminal() {
 //        System.out.println("Hello from bank application!");
@@ -175,6 +180,22 @@ public class Bank {
         this.accountInfoPrinterService.printAccountBalance(myCreditCardAccount);
         this.cardInfoPrinterService.printCardInfo(myCreditCardAccount.getCreditCard());
 
+
+    }
+
+    public void chequeExample() {
+        Person owner = this.personFactory.createPerson("vitek", "tintera", 1);
+        BaseAccount myAccount = this.accountCreationService.createAccount(AccountType.StudentAccount, owner, 1000);
+        this.accountInfoPrinterService.printAccountBalance(myAccount);
+
+        BaseCheque cheque1 = this.chequeCreatorService.createChequeAndAssignToAccount(myAccount, "123");
+
+
+        this.moneyTransferService.useCheque(cheque1, 500);
+        this.accountInfoPrinterService.printAccountBalance(myAccount);
+        this.moneyTransferService.useCheque(cheque1, 500);
+
+        this.accountInfoPrinterService.printAccountBalance(myAccount);
 
     }
 }

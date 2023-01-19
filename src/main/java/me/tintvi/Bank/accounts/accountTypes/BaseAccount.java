@@ -1,6 +1,7 @@
 package me.tintvi.Bank.accounts.accountTypes;
 
 import me.tintvi.Bank.card.BaseCard;
+import me.tintvi.Bank.cheque.BaseCheque;
 import me.tintvi.Bank.person.Person;
 
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ public class BaseAccount {
     private float balance;
     private Person owner;
     protected HashMap<String, BaseCard> cards = new HashMap<>();
+
+    protected HashMap<String, BaseCheque> cheques = new HashMap<>();
     private String accountNumber;
 
 
@@ -52,6 +55,10 @@ public class BaseAccount {
             this.addCard(card);
         }
     }
+
+    public void addCheque(BaseCheque cheque) { this.cheques.put(cheque.getChequeNumber(), cheque); }
+
+    public void removeCheque(BaseCheque cheque) { this.cheques.remove(cheque.getChequeNumber(), cheque); }
 
     public int getCardCount() {
         return this.cards.size();

@@ -21,6 +21,7 @@ public class Main {
         //bank.example();
         //bank.atmExample();
         //bank.calculatorExample();
-        bank.creditAccountExample();
+        //bank.creditAccountExample();
+        bank.chequeExample();
     }
 }
