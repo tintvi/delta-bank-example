@@ -4,6 +4,7 @@ package me.tintvi.Bank.accounts;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.tintvi.Bank.accounts.accountTypes.BaseAccount;
+import me.tintvi.Bank.accounts.accountTypes.CreditCardAccount;
 import me.tintvi.Bank.accounts.accountTypes.SavingsAccount;
 import me.tintvi.Bank.accounts.accountTypes.StudentAccount;
 import me.tintvi.Bank.person.Person;
@@ -25,5 +26,9 @@ public class AccountFactory {
 
     public SavingsAccount createSavingsAccount(String accountNumber, Person person, float balance) {
         return new SavingsAccount(accountNumber, person, balance);
+    }
+
+    public CreditCardAccount createCreditCardAccount(String accountNumber, Person person, float balance) {
+        return new CreditCardAccount(accountNumber, person, balance);
     }
 }

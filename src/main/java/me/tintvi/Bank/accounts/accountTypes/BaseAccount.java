@@ -10,7 +10,7 @@ import java.util.List;
 public class BaseAccount {
     private float balance;
     private Person owner;
-    private HashMap<String, BaseCard> cards = new HashMap<>();
+    protected HashMap<String, BaseCard> cards = new HashMap<>();
     private String accountNumber;
 
 

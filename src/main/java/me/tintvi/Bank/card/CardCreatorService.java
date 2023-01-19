@@ -38,4 +38,11 @@ public class CardCreatorService {
         account.addCard(c);
     }
 
+    public CardFactory getCardFactory() {
+        return cardFactory;
+    }
+
+    public CardNumberGeneratorService cardNumberGeneratorService() {
+        return cardNumberGeneratorService;
+    }
 }

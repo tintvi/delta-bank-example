@@ -1,5 +1,6 @@
 package me.tintvi.Bank.bank;
 
+import me.tintvi.Bank.accounts.accountTypes.CreditCardAccount;
 import me.tintvi.Bank.actions.ActionProcessService;
 import me.tintvi.Bank.atm.AtmCreationService;
 import me.tintvi.Bank.atm.AtmInfoPrinterService;
@@ -23,6 +24,7 @@ import me.tintvi.Bank.person.Person;
 import me.tintvi.Bank.person.PersonFactory;
 import me.tintvi.Bank.storage.GsonSerializationService;
 import me.tintvi.Bank.storage.IOFileStorageService;
+import me.tintvi.Bank.utils.Calculator;
 
 import javax.inject.Inject;
 
@@ -157,5 +159,22 @@ public class Bank {
         this.atmWithdrawService.WithdrawMoney(myCard, 500);
 
         this.atmInfoPrinterService.getAccountBalance(myCard);
+    }
+
+    public void calculatorExample(){
+        Calculator calculator = new Calculator();
+        System.out.println(Calculator.add(1,2));
+    }
+
+    public void creditAccountExample() {
+        Person owner = this.personFactory.createPerson("vitek", "tintera", 1);
+        BaseAccount myAccount = this.accountCreationService.createAccount(AccountType.StudentAccount, owner, 1000);
+        this.accountInfoPrinterService.printAccountBalance(myAccount);
+
+        CreditCardAccount myCreditCardAccount = (CreditCardAccount) accountCreationService.createAccount(AccountType.CreditCardAccount, owner, 5000);
+        this.accountInfoPrinterService.printAccountBalance(myCreditCardAccount);
+        this.cardInfoPrinterService.printCardInfo(myCreditCardAccount.getCreditCard());
+
+
     }
 }
